@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="options.css">
+  <title>Xorcist Settings</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Xorcist Settings</h1>
+
+    <section class="section">
+      <h2>GitHub Integration</h2>
+      <p class="description">Connect your GitHub account to share rules with the community.</p>
+
+      <div class="field">
+        <label for="github-token">Personal Access Token</label>
+        <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxx">
+        <small>Requires <code>repo</code> scope. <a href="https://github.com/settings/tokens/new" target="_blank">Create token</a></small>
+      </div>
+
+      <div class="field">
+        <label for="rules-repo">Rules Repository</label>
+        <input type="text" id="rules-repo" placeholder="username/xorcist-rules" value="placeholder/xorcist-rules">
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Auto-Sync</h2>
+
+      <div class="sync-status">
+        <div class="sync-info">
+          <span class="sync-label">Last sync:</span>
+          <span class="sync-value" id="last-sync">Never</span>
+        </div>
+        <div class="sync-info" id="sync-error-container" style="display:none">
+          <span class="sync-label">Error:</span>
+          <span class="sync-value sync-error" id="sync-error"></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="sync-interval">Sync Frequency</label>
+        <select id="sync-interval">
+          <option value="0">Manual only</option>
+          <option value="15">Every 15 minutes</option>
+          <option value="60" selected>Every hour</option>
+          <option value="360">Every 6 hours</option>
+          <option value="1440">Daily</option>
+        </select>
+      </div>
+
+      <div class="field checkbox">
+        <label>
+          <input type="checkbox" id="auto-apply" checked>
+          Automatically apply rules on page load
+        </label>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Tags</h2>
+        <button id="add-tag-btn" class="btn btn-small">+ New Tag</button>
+      </div>
+      <p class="description">Organize rules with tags. Disable a tag to disable all rules with that tag.</p>
+
+      <div class="tags-list" id="tags-list">
+        <p class="empty-state">Loading tags...</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Community Rules</h2>
+        <span class="rule-count" id="community-count">0 rules</span>
+      </div>
+      <p class="description">Rules from the shared repository. Toggle to enable/disable.</p>
+
+      <div class="rules-list" id="community-rules">
+        <p class="empty-state">No community rules loaded</p>
+      </div>
+
+      <div class="field-actions">
+        <button id="sync-btn" class="btn">Sync Now</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>My Rules</h2>
+        <span class="rule-count" id="user-count">0 rules</span>
+      </div>
+      <p class="description">Your local rules. These are not shared unless you choose to.</p>
+
+      <div class="rules-list" id="user-rules">
+        <p class="empty-state">No local rules yet</p>
+      </div>
+
+      <div class="field-actions">
+        <button id="import-btn" class="btn">Import</button>
+        <button id="export-btn" class="btn">Export</button>
+      </div>
+      <input type="file" id="import-file" accept=".json" style="display:none">
+    </section>
+
+    <div class="actions">
+      <button id="save-btn" class="btn btn-primary">Save Settings</button>
+      <span id="save-status" class="save-status"></span>
+    </div>
+  </div>
+
+  <!-- Tag Modal -->
+  <div id="tag-modal" class="modal" style="display:none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Create Tag</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label for="tag-name">Tag Name</label>
+          <input type="text" id="tag-name" placeholder="e.g., social-media" maxlength="30">
+        </div>
+        <div class="field">
+          <label>Color</label>
+          <div class="color-picker" id="tag-color-picker">
+            <button type="button" class="color-option selected" data-color="#4285f4" style="background:#4285f4"></button>
+            <button type="button" class="color-option" data-color="#ea4335" style="background:#ea4335"></button>
+            <button type="button" class="color-option" data-color="#fbbc04" style="background:#fbbc04"></button>
+            <button type="button" class="color-option" data-color="#34a853" style="background:#34a853"></button>
+            <button type="button" class="color-option" data-color="#673ab7" style="background:#673ab7"></button>
+            <button type="button" class="color-option" data-color="#e91e63" style="background:#e91e63"></button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="tag-cancel">Cancel</button>
+        <button class="btn btn-primary" id="tag-create">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tag Picker Modal (for adding tags to rules) -->
+  <div id="tag-picker-modal" class="modal" style="display:none">
+    <div class="modal-content modal-content-small">
+      <div class="modal-header">
+        <h3>Add Tags</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="tag-picker-list" id="tag-picker-list">
+          <p class="empty-state">No tags available</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="tag-picker-close">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

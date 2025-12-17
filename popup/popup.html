@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="popup.css">
+  <title>Xorcist</title>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Xorcist</h1>
+      <label class="toggle">
+        <input type="checkbox" id="enabled-toggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <span class="stat-value" id="text-count">-</span>
+        <span class="stat-label">Text matches</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="element-count">-</span>
+        <span class="stat-label">Elements</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="rules-count">-</span>
+        <span class="stat-label">Rules active</span>
+      </div>
+    </section>
+
+    <section class="actions">
+      <button id="report-btn" class="btn btn-primary">
+        <span class="btn-icon">+</span>
+        Report X Occurrence
+      </button>
+      <button id="batch-btn" class="btn btn-secondary">
+        <span class="btn-icon">++</span>
+        Batch Edit Mode
+      </button>
+      <button id="apply-btn" class="btn btn-secondary">
+        Apply Rules Now
+      </button>
+    </section>
+
+    <section class="status" id="status-section" style="display: none">
+      <div class="status-message" id="status-message"></div>
+    </section>
+
+    <footer class="footer">
+      <a href="#" id="options-link">Settings</a>
+      <span class="separator">|</span>
+      <a href="https://github.com/placeholder/xorcist-rules" target="_blank">View Rules</a>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

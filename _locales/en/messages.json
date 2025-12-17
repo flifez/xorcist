@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Xorcist",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Crowdsourced removal of X-related branding. Report occurrences and propose fixes.",
+    "description": "Extension description"
+  }
+}

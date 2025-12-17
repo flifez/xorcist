@@ -1,0 +1,566 @@
+/* Xorcist Element Picker Styles */
+
+/* Highlight on hover */
+.xorcist-highlight {
+  outline: 2px dashed #4285f4 !important;
+  outline-offset: 2px;
+  cursor: crosshair !important;
+}
+
+/* Selected element */
+.xorcist-selected {
+  outline: 3px solid #4285f4 !important;
+  outline-offset: 2px;
+  background-color: rgba(66, 133, 244, 0.1) !important;
+}
+
+/* Editing mode */
+.xorcist-editing {
+  outline: 3px solid #34a853 !important;
+  outline-offset: 2px;
+  background-color: rgba(52, 168, 83, 0.1) !important;
+  cursor: text !important;
+  min-height: 1em;
+}
+
+/* Marked for removal */
+.xorcist-removed {
+  outline: 3px solid #ea4335 !important;
+  outline-offset: 2px;
+  background-color: rgba(234, 67, 53, 0.2) !important;
+  opacity: 0.5 !important;
+  text-decoration: line-through !important;
+  pointer-events: none;
+}
+
+/* Floating toolbar */
+#xorcist-toolbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  z-index: 2147483647;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  opacity: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+
+#xorcist-toolbar.xorcist-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.xorcist-toolbar-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.xorcist-toolbar-hint {
+  color: #aaa;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.xorcist-toolbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Toolbar buttons */
+.xorcist-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.xorcist-btn:hover {
+  transform: translateY(-1px);
+}
+
+.xorcist-btn:active {
+  transform: translateY(0);
+}
+
+.xorcist-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.xorcist-btn-edit {
+  background: #34a853;
+  color: white;
+}
+
+.xorcist-btn-edit:hover {
+  background: #2d9249;
+}
+
+.xorcist-btn-remove {
+  background: #ea4335;
+  color: white;
+}
+
+.xorcist-btn-remove:hover {
+  background: #d33828;
+}
+
+.xorcist-btn-save {
+  background: #4285f4;
+  color: white;
+}
+
+.xorcist-btn-save:hover {
+  background: #3367d6;
+}
+
+.xorcist-btn-cancel {
+  background: #333;
+  color: #aaa;
+}
+
+.xorcist-btn-cancel:hover {
+  background: #444;
+  color: white;
+}
+
+/* Toast notifications */
+.xorcist-toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 2147483647;
+  opacity: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.xorcist-toast-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.xorcist-toast-success {
+  background: #34a853;
+  color: white;
+}
+
+.xorcist-toast-error {
+  background: #ea4335;
+  color: white;
+}
+
+.xorcist-toast-info {
+  background: #1a1a1a;
+  color: white;
+}
+
+/* Toast with action button */
+.xorcist-toast-with-action {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-right: 12px;
+}
+
+.xorcist-toast-message {
+  flex: 1;
+}
+
+.xorcist-toast-action {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.xorcist-toast-action:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Keyboard hints */
+#xorcist-toolbar::after {
+  content: "E = Edit  \2022  D = Delete  \2022  Enter = Save  \2022  Esc = Cancel";
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: #666;
+  white-space: nowrap;
+}
+
+/* Edit Panel */
+#xorcist-edit-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  background: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  z-index: 2147483647;
+  opacity: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#xorcist-edit-panel.xorcist-visible {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.xorcist-edit-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #333;
+}
+
+.xorcist-edit-panel-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.xorcist-edit-panel-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.xorcist-edit-panel-close:hover {
+  color: #fff;
+}
+
+.xorcist-edit-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.xorcist-edit-section {
+  margin-bottom: 20px;
+}
+
+.xorcist-edit-section:last-child {
+  margin-bottom: 0;
+}
+
+.xorcist-edit-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.xorcist-edit-original {
+  background: #0d0d0d;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+  font-size: 13px;
+  color: #888;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0;
+}
+
+.xorcist-edit-textarea {
+  width: 100%;
+  min-height: 120px;
+  background: #0d0d0d;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+  font-size: 13px;
+  color: #fff;
+  resize: vertical;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.xorcist-edit-textarea:focus {
+  outline: none;
+  border-color: #4285f4;
+}
+
+.xorcist-edit-notes {
+  width: 100%;
+  min-height: 60px;
+  background: #0d0d0d;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  color: #aaa;
+  resize: vertical;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.xorcist-edit-notes:focus {
+  outline: none;
+  border-color: #4285f4;
+  color: #fff;
+}
+
+.xorcist-edit-panel-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid #333;
+}
+
+/* Panel backdrop */
+#xorcist-edit-panel::before {
+  content: '';
+  position: fixed;
+  top: -100vh;
+  left: -100vw;
+  width: 300vw;
+  height: 300vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+/* =====================================================
+   Batch Panel - Draggable floating panel for batch edits
+   ===================================================== */
+
+#xorcist-batch-panel {
+  position: fixed;
+  width: 320px;
+  max-height: 400px;
+  background: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  z-index: 2147483646;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.xorcist-batch-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #252525;
+  cursor: move;
+  user-select: none;
+}
+
+.xorcist-batch-header-drag {
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-right: 12px;
+}
+
+.xorcist-batch-drag-line {
+  height: 2px;
+  background: #555;
+  border-radius: 1px;
+}
+
+.xorcist-batch-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.xorcist-batch-count {
+  font-size: 12px;
+  background: #4285f4;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.xorcist-batch-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  max-height: 260px;
+}
+
+.xorcist-batch-empty {
+  text-align: center;
+  color: #666;
+  font-size: 13px;
+  padding: 24px 12px;
+  margin: 0;
+}
+
+.xorcist-batch-rule {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  background: #252525;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.xorcist-batch-rule:last-child {
+  margin-bottom: 0;
+}
+
+.xorcist-batch-rule-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.xorcist-batch-rule-hostname {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.xorcist-batch-rule-detail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.xorcist-batch-rule-action {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.xorcist-batch-rule-action.remove {
+  background: rgba(234, 67, 53, 0.2);
+  color: #ea4335;
+}
+
+.xorcist-batch-rule-action.replace {
+  background: rgba(66, 133, 244, 0.2);
+  color: #4285f4;
+}
+
+.xorcist-batch-rule-action.hide {
+  background: rgba(251, 188, 4, 0.2);
+  color: #fbbc04;
+}
+
+.xorcist-batch-rule-text {
+  font-size: 12px;
+  color: #aaa;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+
+.xorcist-batch-rule-remove {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 16px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.xorcist-batch-rule-remove:hover {
+  color: #ea4335;
+}
+
+.xorcist-batch-footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #333;
+}
+
+.xorcist-batch-btn {
+  flex: 1;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.xorcist-batch-btn-add {
+  background: #333;
+  color: #fff;
+}
+
+.xorcist-batch-btn-add:hover {
+  background: #444;
+}
+
+.xorcist-batch-btn-save {
+  background: #4285f4;
+  color: #fff;
+}
+
+.xorcist-batch-btn-save:hover:not(:disabled) {
+  background: #3367d6;
+}
+
+.xorcist-batch-btn-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
